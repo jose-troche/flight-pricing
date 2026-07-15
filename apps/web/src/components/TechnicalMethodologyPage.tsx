@@ -10,8 +10,8 @@ export function TechnicalMethodologyPage() {
           Audience: revenue management analysts, pricing scientists, engineers reviewing the model for correctness and
           fitness for purpose. Companion document: <a href="#/docs/executive-overview">Executive Overview</a>{" "}
           (non-technical business rationale). Code: all algorithms described here live in{" "}
-          <code>packages/engine/src/</code>, dependency-free TypeScript, unit-tested with Vitest (
-          <code>packages/engine/test/</code>).
+          <a href="https://github.com/jose-troche/flight-pricing">https://github.com/jose-troche/flight-pricing</a>,
+          dependency-free TypeScript, unit-tested with Vitest.
         </p>
         <div className="prose">
           <h2>1. Problem framing</h2>
