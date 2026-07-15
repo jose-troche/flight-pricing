@@ -56,14 +56,14 @@ export function DocsView() {
       <div className="panel">
         <div className="panel-title">System architecture</div>
         <p className="prose" style={{ marginTop: 0 }}>
-          The whole system — UI, API, and pricing engine — deploys as a single Cloudflare Worker with no database.
-          The same <code>@flight-pricing/engine</code> module is bundled into both the browser (for instant,
-          client-side interactivity) and the Worker (as the authoritative server-side calculation), so there is no
-          drift between what the UI shows and what the API returns.
+          The whole system — UI, API, and pricing engine — deploys as a single lightweight backend service with no
+          database. The same <code>@flight-pricing/engine</code> module is bundled into both the browser (for
+          instant, client-side interactivity) and the server (as the authoritative server-side calculation), so
+          there is no drift between what the UI shows and what the API returns.
         </p>
         <img
           src="/architecture.svg"
-          alt="Architecture diagram: packages/engine (shared TypeScript source) is bundled into both the visitor's browser (React UI + client-side engine, for instant recompute with no network round-trip) and the Cloudflare Worker (static assets + Hono API + server-side engine). The browser and Worker communicate over HTTP for the initial page load and optional server cross-checks. The whole system fits Cloudflare's free tier: 100,000 requests/day, no database, well under 10ms CPU per API request."
+          alt="Architecture diagram: packages/engine (shared TypeScript source) is bundled into both the visitor's browser (React UI + client-side engine, for instant recompute with no network round-trip) and the server Worker (static assets + Hono API + server-side engine). The browser and Worker communicate over HTTP for the initial page load and optional server cross-checks."
           style={{ width: "100%", maxWidth: 960, height: "auto", display: "block", margin: "8px auto 0" }}
         />
       </div>
@@ -94,9 +94,9 @@ export function DocsView() {
           </p>
           <h3>Cost to run</h3>
           <p>
-            The entire system — UI, API, and pricing engine — runs in a single Cloudflare Worker with no database.
-            All interactive computation happens client-side or in sub-10ms server requests, comfortably inside
-            Cloudflare's free tier (100,000 requests/day, no paid add-ons required).
+            The entire system — UI, API, and pricing engine — runs in a single lightweight backend service with no
+            database. All interactive computation happens client-side or in sub-10ms server requests, so there is
+            effectively no infrastructure cost to keep this running.
           </p>
         </div>
       </div>
@@ -114,20 +114,23 @@ export function DocsView() {
           <h3>What's simplified</h3>
           <p>
             Single-leg (no O&amp;D network effects), independent segments (no cross-elasticity/diversion), and a
-            fixed WTP-to-bucket decomposition held constant over time. These are stated explicitly — see{" "}
-            <code>docs/technical-methodology.md</code> for the full derivation and assumption list.
+            fixed WTP-to-bucket decomposition held constant over time. These are stated explicitly — see the{" "}
+            <a href="#/docs/technical-methodology">Technical Methodology</a> page for the full derivation and
+            assumption list.
           </p>
           <h3>Validation</h3>
           <p>
             Unit tests cover EMSRb against the closed-form Littlewood's-rule two-class case, monotonicity properties,
             and robustness to malformed input. A Monte Carlo simulator stress-tests the mean-forecast-derived policy
-            against stochastic demand realizations. See <code>docs/technical-methodology.md §Validation</code> for
-            full methodology and results.
+            against stochastic demand realizations. See the{" "}
+            <a href="#/docs/technical-methodology">Technical Methodology</a> page, §Validation, for full methodology
+            and results.
           </p>
           <h3>Full documentation</h3>
           <p>
-            <code>docs/executive-overview.md</code> and <code>docs/technical-methodology.md</code> in the repository
-            contain the complete write-ups this tab summarizes.
+            The <a href="#/docs/executive-overview">Executive Overview</a> and{" "}
+            <a href="#/docs/technical-methodology">Technical Methodology</a> pages contain the complete write-ups
+            this tab summarizes.
           </p>
         </div>
       </div>

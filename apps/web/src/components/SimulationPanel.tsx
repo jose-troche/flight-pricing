@@ -61,7 +61,7 @@ export function SimulationPanel(props: { parameters: PricingParameters }) {
         <SliderField label="Random seed" value={seed} min={1} max={9999} step={1} onChange={setSeed} />
         <div className="field-desc">Computed {trials} × 2 trials in {elapsedMs.toFixed(1)}ms (client-side).</div>
         <button className="button secondary" style={{ marginTop: 10 }} onClick={runOnServer} disabled={serverLoading}>
-          {serverLoading ? "Calling Worker API…" : "Cross-check via Cloudflare Worker API"}
+          {serverLoading ? "Calling Worker API…" : "Cross-check via Worker API"}
         </button>
         {serverResult ? (
           <div className="field-desc" style={{ marginTop: 8 }}>

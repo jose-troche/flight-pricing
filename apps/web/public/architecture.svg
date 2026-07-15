@@ -39,14 +39,14 @@
   <text class="title" x="480" y="30" text-anchor="middle" font-size="17">Flight Pricing Studio — system architecture</text>
 
   <!-- Shared engine box -->
-  <rect class="engine-fill engine-stroke" x="300" y="52" width="360" height="84" rx="10" stroke-width="1.5" />
+  <rect class="engine-fill engine-stroke" x="180" y="52" width="600" height="84" rx="10" stroke-width="1.5" />
   <text class="title" x="480" y="76" text-anchor="middle" font-size="13">packages/engine — shared TypeScript source</text>
   <text class="secondary" x="480" y="94" text-anchor="middle" font-size="11">EMSRb · demand/elasticity model · booking curves · Monte Carlo simulator</text>
   <text class="muted" x="480" y="110" text-anchor="middle" font-size="10.5">Zero runtime dependencies — identical code runs in the browser and the Worker</text>
 
   <!-- Dashed bundling arrows -->
-  <path class="dash-line" d="M 380 136 L 250 210" marker-end="url(#arrowMuted)" />
-  <path class="dash-line" d="M 580 136 L 710 210" marker-end="url(#arrowMuted)" />
+  <path class="dash-line" d="M 350 136 L 250 210" marker-end="url(#arrowMuted)" />
+  <path class="dash-line" d="M 610 136 L 710 210" marker-end="url(#arrowMuted)" />
   <text class="muted" x="255" y="168" font-size="10.5">bundled into</text>
   <text class="muted" x="655" y="168" font-size="10.5">bundled into</text>
 
@@ -70,7 +70,7 @@
 
   <!-- Worker box -->
   <rect class="worker-fill worker-stroke" x="540" y="210" width="380" height="360" rx="12" stroke-width="1.5" />
-  <text class="title" x="730" y="238" text-anchor="middle" font-size="14">Cloudflare Worker — "flight-pricing"</text>
+  <text class="title" x="730" y="238" text-anchor="middle" font-size="14">Server Worker — "flight-pricing"</text>
   <text class="muted" x="730" y="254" text-anchor="middle" font-size="10.5">single deployable · no database</text>
 
   <rect class="subbox" x="570" y="266" width="320" height="54" rx="8" />
@@ -86,7 +86,7 @@
   <text class="ink" x="730" y="426" text-anchor="middle" font-size="12" font-weight="600">@flight-pricing/engine (server bundle)</text>
   <text class="secondary" x="730" y="442" text-anchor="middle" font-size="10.5">Same module — authoritative compute</text>
 
-  <text class="muted" x="730" y="548" text-anchor="middle" font-size="10.5">No KV / D1 / Durable Objects / Queues —</text>
+  <text class="muted" x="730" y="548" text-anchor="middle" font-size="10.5">No database, queue, or other managed service —</text>
   <text class="muted" x="730" y="562" text-anchor="middle" font-size="10.5">nothing to provision beyond the Worker itself</text>
 
   <!-- HTTP arrow between browser and worker -->
@@ -95,11 +95,6 @@
   <text class="muted" x="480" y="410" text-anchor="middle" font-size="9.5">GET / (assets)</text>
   <text class="muted" x="480" y="422" text-anchor="middle" font-size="9.5">POST /api/* (optional</text>
   <text class="muted" x="480" y="434" text-anchor="middle" font-size="9.5">cross-check)</text>
-
-  <!-- Footer -->
-  <text class="secondary" x="480" y="605" text-anchor="middle" font-size="11.5" font-weight="600">
-    Fits Cloudflare Workers' free tier — 100,000 requests/day · well under 10ms CPU per API request
-  </text>
 
   <defs>
     <marker id="arrowMain" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">

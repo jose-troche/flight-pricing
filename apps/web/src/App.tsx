@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   generatePriceCurve,
   getDefaultParameters,
@@ -12,10 +12,12 @@ import { FareBucketTable } from "./components/FareBucketTable";
 import { SimulationPanel } from "./components/SimulationPanel";
 import { ValidationView } from "./components/ValidationView";
 import { DocsView } from "./components/DocsView";
+import { ExecutiveOverviewPage } from "./components/ExecutiveOverviewPage";
+import { TechnicalMethodologyPage } from "./components/TechnicalMethodologyPage";
 import { StatRow, StatTile } from "./components/StatTile";
 import { fetchPriceFromServer } from "./lib/api";
 
-type Tab = "studio" | "simulation" | "validation" | "docs";
+type Tab = "studio" | "simulation" | "validation" | "docs" | "docs/executive-overview" | "docs/technical-methodology";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "studio", label: "Pricing studio" },
@@ -24,12 +26,30 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "docs", label: "Documentation" },
 ];
 
+const VALID_TABS: Tab[] = ["studio", "simulation", "validation", "docs", "docs/executive-overview", "docs/technical-methodology"];
+
+function tabFromHash(): Tab {
+  const path = window.location.hash.replace(/^#\/?/, "");
+  return (VALID_TABS as string[]).includes(path) ? (path as Tab) : "studio";
+}
+
 export default function App() {
   const [parameters, setParameters] = useState<PricingParameters>(() => getDefaultParameters());
-  const [tab, setTab] = useState<Tab>("studio");
+  const [tab, setTab] = useState<Tab>(() => tabFromHash());
   const [serverCheck, setServerCheck] = useState<{ revenuePerSeat: number } | null>(null);
   const [serverLoading, setServerLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const onHashChange = () => setTab(tabFromHash());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const selectTab = (next: Tab) => {
+    window.location.hash = next === "studio" ? "" : `/${next}`;
+    setTab(next);
+  };
 
   const { result, issues } = useMemo(() => {
     const { parameters: sanitized, issues } = sanitizeParameters(parameters);
@@ -55,8 +75,7 @@ export default function App() {
         <div>
           <h1 className="app-title">Flight Pricing Studio</h1>
           <p className="app-subtitle">
-            EMSRb-based dynamic pricing engine · interactive parameters · Monte Carlo validation · single Cloudflare
-            Worker
+            EMSRb-based dynamic pricing engine · interactive parameters · Monte Carlo validation
           </p>
         </div>
       </header>
@@ -66,9 +85,9 @@ export default function App() {
           <button
             key={t.id}
             role="tab"
-            aria-selected={tab === t.id}
+            aria-selected={tab === t.id || (t.id === "docs" && tab.startsWith("docs/"))}
             className="tab-button"
-            onClick={() => setTab(t.id)}
+            onClick={() => selectTab(t.id)}
           >
             {t.label}
           </button>
@@ -108,7 +127,7 @@ export default function App() {
 
             <div className="panel">
               <button className="button secondary" onClick={runServerCheck} disabled={serverLoading}>
-                {serverLoading ? "Calling Worker API…" : "Cross-check via Cloudflare Worker API"}
+                {serverLoading ? "Calling Worker API…" : "Cross-check via Worker API"}
               </button>
               {serverCheck ? (
                 <div className="field-desc" style={{ marginTop: 8 }}>
@@ -126,10 +145,12 @@ export default function App() {
       {tab === "simulation" && <SimulationPanel parameters={parameters} />}
       {tab === "validation" && <ValidationView />}
       {tab === "docs" && <DocsView />}
+      {tab === "docs/executive-overview" && <ExecutiveOverviewPage />}
+      {tab === "docs/technical-methodology" && <TechnicalMethodologyPage />}
 
       <p className="footer-note">
-        Synthetic data and illustrative parameters only — not real airline fares or schedules. See{" "}
-        <code>docs/</code> in the repository for full methodology.
+        Synthetic data and illustrative parameters only — not real airline fares or schedules. See the{" "}
+        <a href="#/docs">Documentation tab</a> for full methodology.
       </p>
     </div>
   );
