@@ -1,0 +1,14 @@
+name = "flight-pricing"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+
+# Free-tier friendly: no KV, D1, Durable Objects, or Queues — the engine is
+# pure computation with no persisted state, so every request is served
+# entirely from CPU + the static asset bundle below.
+[assets]
+directory = "../web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[observability]
+enabled = true

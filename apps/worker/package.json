@@ -1,0 +1,22 @@
+{
+  "name": "@flight-pricing/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "deploy": "wrangler deploy",
+    "lint": "true"
+  },
+  "dependencies": {
+    "@flight-pricing/engine": "workspace:*",
+    "hono": "^4.6.9"
+  },
+  "devDependencies": {
+    "wrangler": "^3.87.0",
+    "typescript": "^5.6.3",
+    "@cloudflare/workers-types": "^4.20241106.0"
+  }
+}

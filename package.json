@@ -1,0 +1,23 @@
+{
+  "name": "flight-pricing",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Airline dynamic pricing model: engine, API, and visualization UI deployed as a single Cloudflare Worker",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm --filter @flight-pricing/engine build && pnpm --filter @flight-pricing/web build",
+    "dev:web": "pnpm --filter @flight-pricing/web dev",
+    "dev:worker": "pnpm --filter @flight-pricing/worker dev",
+    "test": "pnpm --filter @flight-pricing/engine test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "generate:synthetic-data": "pnpm --filter @flight-pricing/engine generate:data",
+    "deploy": "pnpm build && pnpm --filter @flight-pricing/worker deploy"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
