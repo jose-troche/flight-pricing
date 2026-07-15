@@ -19,6 +19,8 @@ designed to run comfortably within Cloudflare's free tier.
 
 ## Architecture
 
+![Architecture diagram: packages/engine (shared TypeScript source) is bundled into both the visitor's browser (React UI + client-side engine) and the Cloudflare Worker (static assets + Hono API + server-side engine), communicating over HTTP, all fitting within Cloudflare's free tier.](./apps/web/public/architecture.svg)
+
 ```
 flight-pricing/
 ├── packages/engine/     @flight-pricing/engine — pure TypeScript pricing engine

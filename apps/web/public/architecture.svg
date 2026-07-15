@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <style>
+    .bg { fill: #fcfcfb; }
+    .title { fill: #0b0b0b; font-weight: 650; }
+    .ink { fill: #0b0b0b; }
+    .secondary { fill: #52514e; }
+    .muted { fill: #898781; }
+    .engine-fill { fill: #89878114; }
+    .engine-stroke { stroke: #898781; }
+    .worker-fill { fill: #2a78d614; }
+    .worker-stroke { stroke: #2a78d6; }
+    .browser-fill { fill: #1baf7a14; }
+    .browser-stroke { stroke: #1baf7a; }
+    .subbox { fill: #ffffff; stroke: #c3c2b7; }
+    .arrow-line { stroke: #52514e; stroke-width: 2; fill: none; }
+    .dash-line { stroke: #898781; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+    text { font-size: 12px; }
+
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1a1a19; }
+      .title { fill: #ffffff; }
+      .ink { fill: #ffffff; }
+      .secondary { fill: #c3c2b7; }
+      .muted { fill: #898781; }
+      .engine-fill { fill: #89878122; }
+      .engine-stroke { stroke: #898781; }
+      .worker-fill { fill: #3987e522; }
+      .worker-stroke { stroke: #3987e5; }
+      .browser-fill { fill: #199e7022; }
+      .browser-stroke { stroke: #199e70; }
+      .subbox { fill: #232322; stroke: #383835; }
+      .arrow-line { stroke: #c3c2b7; }
+      .dash-line { stroke: #898781; }
+    }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="960" height="640" />
+
+  <text class="title" x="480" y="30" text-anchor="middle" font-size="17">Flight Pricing Studio — system architecture</text>
+
+  <!-- Shared engine box -->
+  <rect class="engine-fill engine-stroke" x="300" y="52" width="360" height="84" rx="10" stroke-width="1.5" />
+  <text class="title" x="480" y="76" text-anchor="middle" font-size="13">packages/engine — shared TypeScript source</text>
+  <text class="secondary" x="480" y="94" text-anchor="middle" font-size="11">EMSRb · demand/elasticity model · booking curves · Monte Carlo simulator</text>
+  <text class="muted" x="480" y="110" text-anchor="middle" font-size="10.5">Zero runtime dependencies — identical code runs in the browser and the Worker</text>
+
+  <!-- Dashed bundling arrows -->
+  <path class="dash-line" d="M 380 136 L 250 210" marker-end="url(#arrowMuted)" />
+  <path class="dash-line" d="M 580 136 L 710 210" marker-end="url(#arrowMuted)" />
+  <text class="muted" x="255" y="168" font-size="10.5">bundled into</text>
+  <text class="muted" x="655" y="168" font-size="10.5">bundled into</text>
+
+  <!-- Browser box -->
+  <rect class="browser-fill browser-stroke" x="40" y="210" width="380" height="360" rx="12" stroke-width="1.5" />
+  <text class="title" x="230" y="238" text-anchor="middle" font-size="14">Visitor's browser</text>
+
+  <rect class="subbox" x="70" y="254" width="320" height="66" rx="8" />
+  <text class="ink" x="230" y="276" text-anchor="middle" font-size="12" font-weight="600">React UI (apps/web)</text>
+  <text class="secondary" x="230" y="294" text-anchor="middle" font-size="10.5">Parameter studio · price/booking charts ·</text>
+  <text class="secondary" x="230" y="308" text-anchor="middle" font-size="10.5">simulation panel · validation exhibit</text>
+
+  <rect class="subbox" x="70" y="334" width="320" height="86" rx="8" />
+  <text class="ink" x="230" y="356" text-anchor="middle" font-size="12" font-weight="600">@flight-pricing/engine (client bundle)</text>
+  <text class="secondary" x="230" y="374" text-anchor="middle" font-size="10.5">Runs pricing + Monte Carlo simulation</text>
+  <text class="secondary" x="230" y="388" text-anchor="middle" font-size="10.5">directly in-browser — instant feedback,</text>
+  <text class="secondary" x="230" y="402" text-anchor="middle" font-size="10.5">no network round-trip, unmetered compute</text>
+
+  <text class="muted" x="230" y="548" text-anchor="middle" font-size="10.5">Every slider change recomputes the full</text>
+  <text class="muted" x="230" y="562" text-anchor="middle" font-size="10.5">price curve locally, in milliseconds</text>
+
+  <!-- Worker box -->
+  <rect class="worker-fill worker-stroke" x="540" y="210" width="380" height="360" rx="12" stroke-width="1.5" />
+  <text class="title" x="730" y="238" text-anchor="middle" font-size="14">Cloudflare Worker — "flight-pricing"</text>
+  <text class="muted" x="730" y="254" text-anchor="middle" font-size="10.5">single deployable · no database</text>
+
+  <rect class="subbox" x="570" y="266" width="320" height="54" rx="8" />
+  <text class="ink" x="730" y="286" text-anchor="middle" font-size="12" font-weight="600">Static assets</text>
+  <text class="secondary" x="730" y="302" text-anchor="middle" font-size="10.5">Built UI + synthetic validation dataset</text>
+
+  <rect class="subbox" x="570" y="330" width="320" height="66" rx="8" />
+  <text class="ink" x="730" y="350" text-anchor="middle" font-size="12" font-weight="600">Hono API (apps/worker)</text>
+  <text class="secondary" x="730" y="368" text-anchor="middle" font-size="10.5">GET /api/defaults · /api/scenarios</text>
+  <text class="secondary" x="730" y="382" text-anchor="middle" font-size="10.5">POST /api/price · /api/simulate</text>
+
+  <rect class="subbox" x="570" y="406" width="320" height="54" rx="8" />
+  <text class="ink" x="730" y="426" text-anchor="middle" font-size="12" font-weight="600">@flight-pricing/engine (server bundle)</text>
+  <text class="secondary" x="730" y="442" text-anchor="middle" font-size="10.5">Same module — authoritative compute</text>
+
+  <text class="muted" x="730" y="548" text-anchor="middle" font-size="10.5">No KV / D1 / Durable Objects / Queues —</text>
+  <text class="muted" x="730" y="562" text-anchor="middle" font-size="10.5">nothing to provision beyond the Worker itself</text>
+
+  <!-- HTTP arrow between browser and worker -->
+  <path class="arrow-line" d="M 420 390 L 540 390" marker-end="url(#arrowMain)" marker-start="url(#arrowMainStart)" />
+  <text class="secondary" x="480" y="378" text-anchor="middle" font-size="10.5">HTTP</text>
+  <text class="muted" x="480" y="410" text-anchor="middle" font-size="9.5">GET / (assets)</text>
+  <text class="muted" x="480" y="422" text-anchor="middle" font-size="9.5">POST /api/* (optional</text>
+  <text class="muted" x="480" y="434" text-anchor="middle" font-size="9.5">cross-check)</text>
+
+  <!-- Footer -->
+  <text class="secondary" x="480" y="605" text-anchor="middle" font-size="11.5" font-weight="600">
+    Fits Cloudflare Workers' free tier — 100,000 requests/day · well under 10ms CPU per API request
+  </text>
+
+  <defs>
+    <marker id="arrowMain" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" class="secondary" />
+    </marker>
+    <marker id="arrowMainStart" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 Z" class="secondary" />
+    </marker>
+    <marker id="arrowMuted" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" class="muted" />
+    </marker>
+  </defs>
+</svg>
